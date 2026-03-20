@@ -1,21 +1,21 @@
 /* ============================================================
    PRGallery.css — "Dare to Donate" Instagram-story grid
+   Unified with the Treasurer-Dashboard colour palette
    ============================================================ */
 
-/* ---------- Google Fonts (Impact fallback stack) ---------- */
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
-
-/* ---------- Design tokens ---------- */
+/* ---------- Design tokens (mapped to Tailwind theme) ---------- */
 :root {
-  --pr-bg:        #5C0A0A;
-  --pr-bg-deep:   #3A0505;
-  --pr-gold:      #FFD700;
-  --pr-gold-dim:  #C9A800;
-  --pr-box-bg:    #FFD700;
-  --pr-box-text:  #5C0A0A;
+  --pr-bg:        #0f172a;        /* surface         */
+  --pr-bg-deep:   #0b1120;        /* slightly darker */
+  --pr-accent:    #6366f1;        /* primary         */
+  --pr-accent-lt: #818cf8;        /* primary-light   */
+  --pr-accent-dk: #4f46e5;        /* primary-dark    */
+  --pr-cyan:      #22d3ee;        /* accent / cyan   */
+  --pr-surface:   #1e293b;        /* surface-light   */
+  --pr-border:    rgba(255,255,255,0.10);
   --pr-radius:    14px;
   --pr-gap:       18px;
-  --pr-font:      'Anton', Impact, 'Arial Black', sans-serif;
+  --pr-font:      'Inter', ui-sans-serif, system-ui, sans-serif;
 }
 
 /* ---------- Outer wrapper ---------- */
@@ -26,28 +26,33 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: #e2e8f0; /* slate-200 */
 }
 
 /* ---------- Title ---------- */
 .pr-gallery__title {
   font-family: var(--pr-font);
   font-size: clamp(2rem, 5vw, 3.2rem);
-  color: var(--pr-gold);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--pr-accent-lt), var(--pr-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   text-transform: uppercase;
   letter-spacing: 4px;
   margin: 0 0 12px;
-  text-shadow: 0 0 20px rgba(255, 215, 0, 0.35);
   text-align: center;
 }
 
 .pr-gallery__subtitle {
   font-family: var(--pr-font);
   font-size: clamp(0.85rem, 2vw, 1.05rem);
-  color: var(--pr-gold-dim);
+  font-weight: 600;
+  color: var(--pr-accent);
   letter-spacing: 6px;
   text-transform: uppercase;
   margin: 0 0 40px;
-  opacity: 0.75;
+  opacity: 0.6;
   text-align: center;
 }
 
@@ -70,47 +75,49 @@
 .pr-column__header {
   font-family: var(--pr-font);
   font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-  color: var(--pr-gold);
+  font-weight: 700;
+  color: var(--pr-accent-lt);
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 3px;
   margin: 0 0 6px;
   padding-bottom: 8px;
-  border-bottom: 2px solid rgba(255, 215, 0, 0.25);
+  border-bottom: 2px solid rgba(99, 102, 241, 0.25);
 }
 
 /* ---------- Donation box ---------- */
 .pr-box {
   aspect-ratio: 1 / 1;
-  background: linear-gradient(145deg, var(--pr-box-bg) 0%, #E8C200 100%);
+  background: var(--pr-surface);
+  border: 1px solid var(--pr-border);
   border-radius: var(--pr-radius);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
 }
 
 .pr-box:hover {
   transform: translateY(-3px) scale(1.02);
-  box-shadow:
-    0 8px 28px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  border-color: rgba(99, 102, 241, 0.3);
 }
 
 /* Amount badge */
 .pr-box__amount {
   font-family: var(--pr-font);
   font-size: clamp(1.4rem, 3vw, 2rem);
-  color: var(--pr-box-text);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--pr-accent-lt), var(--pr-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   text-align: center;
   padding: 10px 0 4px;
   letter-spacing: 1px;
   flex-shrink: 0;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 /* Scrollable name list */
@@ -128,15 +135,15 @@
   width: 4px;
 }
 .pr-box__names::-webkit-scrollbar-thumb {
-  background: var(--pr-box-text);
+  background: var(--pr-accent);
   border-radius: 2px;
   opacity: 0.4;
 }
 
 .pr-box__name {
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--pr-font);
   font-size: clamp(0.6rem, 1.3vw, 0.78rem);
-  color: var(--pr-box-text);
+  color: #94a3b8; /* slate-400 */
   text-align: center;
   line-height: 1.35;
   word-break: break-word;
@@ -144,9 +151,9 @@
 
 /* Empty state */
 .pr-box__empty {
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--pr-font);
   font-size: 0.72rem;
-  color: var(--pr-box-text);
+  color: #64748b; /* slate-500 */
   opacity: 0.45;
   text-align: center;
   margin: auto;
@@ -158,14 +165,14 @@
 .pr-gallery__error {
   font-family: var(--pr-font);
   font-size: 1.3rem;
-  color: var(--pr-gold);
+  color: var(--pr-accent-lt);
   text-align: center;
   padding: 80px 20px;
   letter-spacing: 2px;
 }
 
 .pr-gallery__error {
-  color: #ff6b6b;
+  color: #f87171; /* error */
 }
 
 /* ---------- Responsive ---------- */

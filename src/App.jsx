@@ -38,23 +38,24 @@ export default function App() {
   );
 }
 
-/* Inline styles to avoid CSS-module conflicts with Tailwind */
+/* Inline styles — matches the Treasurer Dashboard colour scheme */
 const styles = {
   nav: {
     display: "flex",
     justifyContent: "center",
     gap: "4px",
     padding: "12px 16px",
-    background: "#3A0505",
-    borderBottom: "2px solid rgba(255, 215, 0, 0.2)",
+    background: "#0f172a",
+    borderBottom: "2px solid rgba(99, 102, 241, 0.2)",
     position: "sticky",
     top: 0,
     zIndex: 50,
   },
   tab: {
-    fontFamily: "'Anton', Impact, 'Arial Black', sans-serif",
-    fontSize: "1rem",
-    letterSpacing: "2px",
+    fontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif",
+    fontSize: "0.9rem",
+    fontWeight: 600,
+    letterSpacing: "1.5px",
     textTransform: "uppercase",
     padding: "10px 28px",
     border: "2px solid transparent",
@@ -62,12 +63,12 @@ const styles = {
     cursor: "pointer",
     transition: "all 0.2s ease",
     background: "transparent",
-    color: "rgba(255, 215, 0, 0.5)",
+    color: "rgba(99, 102, 241, 0.5)",
   },
   tabActive: {
-    background: "rgba(255, 215, 0, 0.12)",
-    color: "#FFD700",
-    borderColor: "#FFD700",
+    background: "rgba(99, 102, 241, 0.12)",
+    color: "#818cf8",
+    borderColor: "#6366f1",
   },
 };
 
