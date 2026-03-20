@@ -1,11 +1,13 @@
 import { useState } from "react";
 import TreasurerDashboard from "./components/TreasurerDashboard";
 import PRGallery from "./components/PRGallery";
+import LiveTotals from "./components/LiveTotals";
 import "./index.css";
 
 const PAGES = {
-  treasurer: { label: "Treasurer", component: TreasurerDashboard },
-  gallery:   { label: "PR Gallery", component: PRGallery },
+  treasurer:  { label: "Treasurer",   component: TreasurerDashboard },
+  gallery:    { label: "PR Gallery",  component: PRGallery },
+  liveTotals: { label: "Live Totals", component: LiveTotals },
 };
 
 export default function App() {
