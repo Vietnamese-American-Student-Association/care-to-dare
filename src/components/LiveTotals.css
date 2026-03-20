@@ -1,0 +1,112 @@
+/* ============================================================
+   LiveTotals — Stat-card banner
+   ============================================================ */
+
+.live-totals {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+}
+
+/* ── Individual card ────────────────────────────────────────── */
+.live-totals__card {
+  position: relative;
+  overflow: hidden;
+  padding: 1.25rem 1.5rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.live-totals__card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* Grand-total card gets a subtle accent ring */
+.live-totals__card--grand {
+  border-color: rgba(99, 102, 241, 0.35);
+  background: rgba(99, 102, 241, 0.08);
+}
+
+/* ── Label ──────────────────────────────────────────────────── */
+.live-totals__label {
+  margin: 0 0 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* ── Value ──────────────────────────────────────────────────── */
+.live-totals__value {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s ease;
+}
+
+.live-totals__card--grand .live-totals__value {
+  color: #818cf8; /* indigo-400 */
+}
+
+/* ── Pulse animation on update ──────────────────────────────── */
+@keyframes pulse-highlight {
+  0% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+  }
+}
+
+.live-totals__card--pulse {
+  animation: pulse-highlight 0.6s ease-out;
+}
+
+/* ── Loading skeleton ───────────────────────────────────────── */
+.live-totals__skeleton {
+  height: 1.75rem;
+  width: 60%;
+  border-radius: 0.5rem;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.06) 25%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.06) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ── Responsive: stack on narrow screens ────────────────────── */
+@media (max-width: 768px) {
+  .live-totals {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .live-totals {
+    grid-template-columns: 1fr;
+  }
+}
