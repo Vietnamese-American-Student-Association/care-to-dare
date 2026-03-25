@@ -18,35 +18,36 @@ function displayBucket(amount) {
 }
 
 /**
- * Given an array of raw name strings for ONE box, return the
+ * Given an array of { name, amount } entries for ONE box, return the
  * formatted display list applying the "x[Count]" compression rule.
  *
- * Rule: if a name appears MORE THAN 5 times → collapse to "Name x[Count]".
- * Otherwise, list each occurrence individually.
+ * Rule: if a (name, amount) pair appears MORE THAN the threshold →
+ * collapse to "Name — $amount x[Count]". Otherwise list individually.
  */
-function compressNames(names) {
-  // Count occurrences
+function compressEntries(entries) {
+  // Build a key for each unique (name, amount) pair
   const counts = {};
-  for (const name of names) {
-    counts[name] = (counts[name] || 0) + 1;
+  const order = [];
+
+  for (const { name, amount } of entries) {
+    const key = `${name}::${amount}`;
+    if (!counts[key]) {
+      counts[key] = { name, amount, count: 0 };
+      order.push(key);
+    }
+    counts[key].count += 1;
   }
 
   const result = [];
-  const handled = new Set();
-
-  for (const name of names) {
-    if (handled.has(name)) continue;
-
-    const count = counts[name];
+  for (const key of order) {
+    const { name, amount, count } = counts[key];
+    const label = `${name} — $${amount}`;
     if (count > NAME_COLLAPSE_THRESHOLD) {
-      result.push(`${name} x${count}`);
-      handled.add(name);
+      result.push(`${label} x${count}`);
     } else {
-      // Push individual entries (we add them all at once)
       for (let i = 0; i < count; i++) {
-        result.push(name);
+        result.push(label);
       }
-      handled.add(name);
     }
   }
 
@@ -79,7 +80,7 @@ export default function PRGallery() {
 
         if (fetchError) throw fetchError;
 
-        // Build nested map: jar → bucket → [name, name, …]
+        // Build nested map: jar → bucket → [{ name, amount }, …]
         const map = emptyGrid();
 
         for (const row of data) {
@@ -87,7 +88,7 @@ export default function PRGallery() {
           const bucket = displayBucket(row.amount);
           const name = row.donors?.name ?? 'Anonymous';
           if (map[jar]) {
-            map[jar][bucket].push(name);
+            map[jar][bucket].push({ name, amount: Number(row.amount) });
           }
         }
 
@@ -118,8 +119,8 @@ export default function PRGallery() {
             <h2 className="pr-column__header">Jar {jarId}</h2>
 
             {AMOUNTS.map((amt) => {
-              const rawNames = grid[jarId][amt];
-              const displayNames = compressNames(rawNames);
+              const rawEntries = grid[jarId][amt];
+              const displayNames = compressEntries(rawEntries);
 
               return (
                 <div className="pr-box" key={amt} id={`jar-${jarId}-amt-${amt}`}>

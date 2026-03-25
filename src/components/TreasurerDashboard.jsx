@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { supabase } from "../lib/supabase";
 
+const TREASURER_PASSWORD =
+  import.meta.env.VITE_TREASURER_PASSWORD || "caretodare";
+
 const JARS = [
   { id: 1, label: "Jar 1", color: "from-indigo-500 to-purple-600" },
   { id: 2, label: "Jar 2", color: "from-cyan-500 to-blue-600" },
@@ -8,6 +11,11 @@ const JARS = [
 ];
 
 export default function TreasurerDashboard() {
+  /* ───── auth state ───── */
+  const [authenticated, setAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+
   /* ───── state ───── */
   const [donorName, setDonorName] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -175,8 +183,69 @@ export default function TreasurerDashboard() {
     }
   };
 
+  /* ───── password handler ───── */
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+    if (passwordInput === TREASURER_PASSWORD) {
+      setAuthenticated(true);
+      setPasswordError(false);
+    } else {
+      setPasswordError(true);
+    }
+  };
+
   /* ───── render helpers ───── */
   const anyJarSelected = JARS.some((j) => selectedJars[j.id]);
+
+  /* ───── password gate ───── */
+  if (!authenticated) {
+    return (
+      <div className="min-h-screen bg-surface text-white flex items-center justify-center p-4">
+        <form
+          onSubmit={handlePasswordSubmit}
+          className="w-full max-w-sm bg-surface-light/80 backdrop-blur-xl border border-white/10 shadow-2xl rounded-3xl p-8 space-y-6"
+        >
+          <div className="text-center space-y-1">
+            <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-primary-light to-accent bg-clip-text text-transparent">
+              Treasurer Dashboard
+            </h1>
+            <p className="text-sm text-slate-400">Enter password to continue</p>
+          </div>
+
+          <div>
+            <label
+              htmlFor="treasurer-password"
+              className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5"
+            >
+              Password
+            </label>
+            <input
+              id="treasurer-password"
+              type="password"
+              value={passwordInput}
+              onChange={(e) => {
+                setPasswordInput(e.target.value);
+                setPasswordError(false);
+              }}
+              placeholder="Enter password…"
+              autoComplete="off"
+              className="w-full rounded-xl bg-surface border border-white/10 px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/60 transition"
+            />
+            {passwordError && (
+              <p className="mt-2 text-sm text-error">Incorrect password.</p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full rounded-xl bg-gradient-to-r from-primary to-primary-dark py-3.5 font-bold text-white shadow-lg shadow-primary/30 transition hover:shadow-primary/50 hover:brightness-110"
+          >
+            Unlock
+          </button>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-surface text-white flex items-center justify-center p-4">
