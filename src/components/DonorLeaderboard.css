@@ -1,0 +1,332 @@
+/* ============================================================
+   DonorLeaderboard — Top donors ranked list
+   Unified with the project colour palette
+   ============================================================ */
+
+/* ---------- Design tokens (same as PRGallery) ---------- */
+.donor-lb {
+  --lb-bg:        #0f172a;
+  --lb-bg-deep:   #0b1120;
+  --lb-accent:    #6366f1;
+  --lb-accent-lt: #818cf8;
+  --lb-accent-dk: #4f46e5;
+  --lb-cyan:      #22d3ee;
+  --lb-emerald:   #34d399;
+  --lb-surface:   #1e293b;
+  --lb-border:    rgba(255,255,255,0.10);
+  --lb-radius:    14px;
+  --lb-font:      'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ---------- Outer wrapper ---------- */
+.donor-lb {
+  min-height: 100vh;
+  background: linear-gradient(160deg, var(--lb-bg) 0%, var(--lb-bg-deep) 100%);
+  padding: 48px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #e2e8f0;
+}
+
+/* ---------- Title ---------- */
+.donor-lb__title {
+  font-family: var(--lb-font);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--lb-accent-lt), var(--lb-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin: 0 0 8px;
+  text-align: center;
+}
+
+.donor-lb__subtitle {
+  font-family: var(--lb-font);
+  font-size: clamp(0.85rem, 2vw, 1.05rem);
+  font-weight: 600;
+  color: var(--lb-accent);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin: 0 0 40px;
+  opacity: 0.6;
+  text-align: center;
+}
+
+/* ---------- Card list ---------- */
+.donor-lb__list {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ---------- Individual donor row ---------- */
+.donor-lb__row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--lb-surface);
+  border: 1px solid var(--lb-border);
+  border-radius: var(--lb-radius);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  animation: donor-slide-in 0.35s ease both;
+}
+
+.donor-lb__row:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+/* Stagger animation */
+.donor-lb__row:nth-child(1)  { animation-delay: 0.00s; }
+.donor-lb__row:nth-child(2)  { animation-delay: 0.04s; }
+.donor-lb__row:nth-child(3)  { animation-delay: 0.08s; }
+.donor-lb__row:nth-child(4)  { animation-delay: 0.12s; }
+.donor-lb__row:nth-child(5)  { animation-delay: 0.16s; }
+.donor-lb__row:nth-child(6)  { animation-delay: 0.20s; }
+.donor-lb__row:nth-child(7)  { animation-delay: 0.24s; }
+.donor-lb__row:nth-child(8)  { animation-delay: 0.28s; }
+.donor-lb__row:nth-child(9)  { animation-delay: 0.32s; }
+.donor-lb__row:nth-child(10) { animation-delay: 0.36s; }
+
+@keyframes donor-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Top-3 accent cards */
+.donor-lb__row--gold {
+  border-color: rgba(250, 204, 21, 0.35);
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.06), var(--lb-surface));
+}
+.donor-lb__row--silver {
+  border-color: rgba(148, 163, 184, 0.35);
+  background: linear-gradient(135deg, rgba(148, 163, 184, 0.06), var(--lb-surface));
+}
+.donor-lb__row--bronze {
+  border-color: rgba(217, 119, 6, 0.3);
+  background: linear-gradient(135deg, rgba(217, 119, 6, 0.05), var(--lb-surface));
+}
+
+/* ---------- Rank badge ---------- */
+.donor-lb__rank {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: var(--lb-font);
+  font-size: 0.85rem;
+  font-weight: 800;
+  background: rgba(99, 102, 241, 0.12);
+  color: var(--lb-accent-lt);
+  border: 2px solid rgba(99, 102, 241, 0.2);
+}
+
+.donor-lb__rank--gold {
+  background: rgba(250, 204, 21, 0.15);
+  color: #facc15;
+  border-color: rgba(250, 204, 21, 0.4);
+  font-size: 1.15rem;
+}
+
+.donor-lb__rank--silver {
+  background: rgba(148, 163, 184, 0.15);
+  color: #94a3b8;
+  border-color: rgba(148, 163, 184, 0.4);
+  font-size: 1.05rem;
+}
+
+.donor-lb__rank--bronze {
+  background: rgba(217, 119, 6, 0.15);
+  color: #d97706;
+  border-color: rgba(217, 119, 6, 0.4);
+  font-size: 1rem;
+}
+
+/* ---------- Info block ---------- */
+.donor-lb__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.donor-lb__name {
+  font-family: var(--lb-font);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.donor-lb__date {
+  font-family: var(--lb-font);
+  font-size: 0.72rem;
+  color: #64748b;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Amount ---------- */
+.donor-lb__amount {
+  flex-shrink: 0;
+  font-family: var(--lb-font);
+  font-size: 1.15rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(135deg, var(--lb-accent-lt), var(--lb-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ---------- Show-more button ---------- */
+.donor-lb__show-more {
+  margin-top: 24px;
+  font-family: var(--lb-font);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 14px 40px;
+  border: 2px solid var(--lb-accent);
+  border-radius: 12px;
+  cursor: pointer;
+  background: rgba(99, 102, 241, 0.08);
+  color: var(--lb-accent-lt);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.donor-lb__show-more::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(34, 211, 238, 0.08));
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.donor-lb__show-more:hover {
+  border-color: var(--lb-accent-lt);
+  box-shadow: 0 0 24px rgba(99, 102, 241, 0.2);
+  transform: translateY(-1px);
+}
+
+.donor-lb__show-more:hover::before {
+  opacity: 1;
+}
+
+.donor-lb__show-more:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ---------- End-of-list message ---------- */
+.donor-lb__end {
+  margin-top: 20px;
+  font-family: var(--lb-font);
+  font-size: 0.8rem;
+  color: #64748b;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* ---------- Loading / Error ---------- */
+.donor-lb__loading,
+.donor-lb__error {
+  font-family: var(--lb-font);
+  font-size: 1.3rem;
+  color: var(--lb-accent-lt);
+  text-align: center;
+  padding: 80px 20px;
+  letter-spacing: 2px;
+}
+
+.donor-lb__error {
+  color: #f87171;
+}
+
+/* ---------- Empty state ---------- */
+.donor-lb__empty {
+  font-family: var(--lb-font);
+  font-size: 1rem;
+  color: #64748b;
+  text-align: center;
+  padding: 60px 20px;
+  letter-spacing: 1px;
+}
+
+/* ---------- Spinner ---------- */
+.donor-lb__spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(99, 102, 241, 0.25);
+  border-top-color: var(--lb-accent-lt);
+  border-radius: 50%;
+  animation: lb-spin 0.7s linear infinite;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+@keyframes lb-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .donor-lb {
+    padding: 32px 16px 48px;
+  }
+
+  .donor-lb__row {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .donor-lb__rank {
+    width: 34px;
+    height: 34px;
+    font-size: 0.75rem;
+  }
+
+  .donor-lb__rank--gold   { font-size: 1rem; }
+  .donor-lb__rank--silver { font-size: 0.9rem; }
+  .donor-lb__rank--bronze { font-size: 0.85rem; }
+
+  .donor-lb__name {
+    font-size: 0.9rem;
+  }
+
+  .donor-lb__amount {
+    font-size: 1rem;
+  }
+
+  .donor-lb__show-more {
+    width: 100%;
+    padding: 14px 24px;
+  }
+}

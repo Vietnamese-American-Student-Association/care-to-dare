@@ -2,12 +2,14 @@ import { useState } from "react";
 import TreasurerDashboard from "./components/TreasurerDashboard";
 import PRGallery from "./components/PRGallery";
 import LiveTotals from "./components/LiveTotals";
+import DonorLeaderboard from "./components/DonorLeaderboard";
 import "./index.css";
 
 const PAGES = {
-  treasurer:  { label: "Treasurer",   component: TreasurerDashboard },
-  gallery:    { label: "PR Gallery",  component: PRGallery },
-  liveTotals: { label: "Live Totals", component: LiveTotals },
+  treasurer:    { label: "Treasurer",    component: TreasurerDashboard },
+  gallery:      { label: "PR Gallery",   component: PRGallery },
+  liveTotals:   { label: "Live Totals",  component: LiveTotals },
+  leaderboard:  { label: "Leaderboard",  component: DonorLeaderboard },
 };
 
 export default function App() {
@@ -42,6 +44,7 @@ export default function App() {
 const styles = {
   nav: {
     display: "flex",
+    flexWrap: "wrap",
     justifyContent: "center",
     gap: "4px",
     padding: "12px 16px",
@@ -53,11 +56,11 @@ const styles = {
   },
   tab: {
     fontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif",
-    fontSize: "0.9rem",
+    fontSize: "0.85rem",
     fontWeight: 600,
-    letterSpacing: "1.5px",
+    letterSpacing: "1.2px",
     textTransform: "uppercase",
-    padding: "10px 28px",
+    padding: "10px 18px",
     border: "2px solid transparent",
     borderRadius: "8px",
     cursor: "pointer",
